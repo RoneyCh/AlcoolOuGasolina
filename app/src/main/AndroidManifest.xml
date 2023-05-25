@@ -10,10 +10,13 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.AlcoolOuGasolina"
+        android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
         tools:targetApi="28">
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.AlcoolOuGasolina">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -1,9 +1,11 @@
 package com.example.alcoolougasolina
 
 import androidx.appcompat.app.AppCompatActivity
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Switch
@@ -15,6 +17,14 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        initializeUI()
+        supportActionBar?.hide()
+
+        val nightModeFlags = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+        if (nightModeFlags == Configuration.UI_MODE_NIGHT_YES) {
+            // Se o modo noturno está ativado, aplica o estilo do modo noturno
+            setTheme(R.style.Theme_AlcoolOuGasolina)
+        }
         savedInstanceState?.let {
             percentual = it.getDouble("percentual")
         }
@@ -70,5 +80,20 @@ override fun onSaveInstanceState(outState: Bundle) {
         }
     }
 
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        // Inicialize os elementos de interface do usuário novamente
+        initializeUI()
+    }
 
+    private fun initializeUI() {
+        val btCalc = findViewById<Button>(R.id.btCalcular)
+        val swPercentual = findViewById<Switch>(R.id.swPercentual)
+
+        btCalc.setOnClickListener { btnCalcular(it) }
+
+        swPercentual.setOnCheckedChangeListener { _, isChecked ->
+            percentual = if (isChecked) 0.75 else 0.70
+        }
+    }
 }
